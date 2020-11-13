@@ -9,7 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@samwood/vue-carousel": "^0.1.0",
+    "@samwood/vue-carousel": "^0.1.5",
     "core-js": "^3.6.5",
     "tailwindcss": "^1.9.6",
     "vue": "^2.6.11",

@@ -14,9 +14,9 @@
         staticBreakpoint
       }"
     >
-      <template v-for="n in slideCount" v-slot:[n-1]>
-        <img :key="`Image - ${n}`" src="../assets/logo.png" />
-        <div :key="`Number - ${n}`">{{ n }}</div>
+      <template v-for="n in Number(slideCount)" v-slot:[n-1]>
+        <img :key="`Image - ${n}`" src="../assets/logo.png" class="mx-auto" />
+        <div :key="`Number - ${n}`" class="font-bold">Slide {{ n }}</div>
       </template>
     </VueCarousel>
     <div class="controls">
@@ -25,28 +25,17 @@
         <!-- Autoplay -->
         <div class="controls__group__item">
           <label>Autoplay</label>
-          <input
-            @change="rerender"
-            type="checkbox"
-            name="autoplay"
-            v-model="autoplay"
-          />
+          <input type="checkbox" name="autoplay" v-model="autoplay" />
         </div>
         <!-- Autoplay Hover Pause -->
         <div class="controls__group__item">
           <label>Autoplay Hover Pause</label>
-          <input
-            @change="rerender"
-            type="checkbox"
-            name="autoplay"
-            v-model="autoplayHoverPause"
-          />
+          <input type="checkbox" name="autoplay" v-model="autoplayHoverPause" />
         </div>
         <!-- Autoplay Interval -->
         <div class="controls__group__item">
           <label>Autoplay Interval</label>
           <input
-            @change="rerender"
             type="Number"
             name="autoplay-interval"
             v-model="autoplayInterval"
@@ -59,8 +48,6 @@
         <div class="controls__group__item">
           <label>Slide Count</label>
           <input
-            @change="rerender"
-            @input="rerender"
             type="Number"
             name="slide-count"
             v-model="slideCount"
@@ -72,22 +59,15 @@
       <div class="controls__group">
         <div class="controls__group__item">
           <label>Loop</label>
-          <input
-            @change="rerender"
-            type="checkbox"
-            name="loop"
-            v-model="loop"
-          />
+          <input type="checkbox" name="loop" v-model="loop" />
         </div>
       </div>
       <!-- Group - Slides Visible -->
       <div class="controls__group">
         <div class="controls__group__title">Slides Visible</div>
         <div class="controls__group__item">
-          <label>XS</label>
+          <label>xs</label>
           <input
-            @change="rerender"
-            @input="rerender"
             type="Number"
             name="slides-visible-xs"
             v-model="slidesVisible.xs"
@@ -96,10 +76,8 @@
           />
         </div>
         <div class="controls__group__item">
-          <label>SM</label>
+          <label>sm</label>
           <input
-            @change="rerender"
-            @input="rerender"
             type="Number"
             name="slides-visible-sm"
             v-model="slidesVisible.sm"
@@ -108,10 +86,8 @@
           />
         </div>
         <div class="controls__group__item">
-          <label>MD</label>
+          <label>md</label>
           <input
-            @change="rerender"
-            @input="rerender"
             type="Number"
             name="slides-visible-md"
             v-model="slidesVisible.md"
@@ -120,10 +96,8 @@
           />
         </div>
         <div class="controls__group__item">
-          <label>LG</label>
+          <label>lg</label>
           <input
-            @change="rerender"
-            @input="rerender"
             type="Number"
             name="slides-visible-lg"
             v-model="slidesVisible.lg"
@@ -132,10 +106,8 @@
           />
         </div>
         <div class="controls__group__item">
-          <label>XL</label>
+          <label>xl</label>
           <input
-            @change="rerender"
-            @input="rerender"
             type="Number"
             name="slides-visible-xl"
             v-model="slidesVisible.xl"
@@ -148,10 +120,8 @@
       <div class="controls__group">
         <div class="controls__group__title">Slide Padding</div>
         <div class="controls__group__item">
-          <label>XS</label>
+          <label>xs</label>
           <input
-            @change="rerender"
-            @input="rerender"
             type="Number"
             name="slide-padding-xs"
             v-model="slidePadding.xs"
@@ -159,10 +129,8 @@
           />
         </div>
         <div class="controls__group__item">
-          <label>SM</label>
+          <label>sm</label>
           <input
-            @change="rerender"
-            @input="rerender"
             type="Number"
             name="slide-padding-sm"
             v-model="slidePadding.sm"
@@ -170,10 +138,8 @@
           />
         </div>
         <div class="controls__group__item">
-          <label>MD</label>
+          <label>md</label>
           <input
-            @change="rerender"
-            @input="rerender"
             type="Number"
             name="slide-padding-md"
             v-model="slidePadding.md"
@@ -181,10 +147,8 @@
           />
         </div>
         <div class="controls__group__item">
-          <label>LG</label>
+          <label>lg</label>
           <input
-            @change="rerender"
-            @input="rerender"
             type="Number"
             name="slide-padding-lg"
             v-model="slidePadding.lg"
@@ -194,8 +158,6 @@
         <div class="controls__group__item">
           <label>XL</label>
           <input
-            @change="rerender"
-            @input="rerender"
             type="Number"
             name="slide-padding-xl"
             v-model="slidePadding.xl"
@@ -207,11 +169,7 @@
       <div class="controls__group">
         <div class="controls__group__item">
           <label>Static Breakpoint</label>
-          <select
-            v-model="staticBreakpoint"
-            @change="rerender"
-            name="static-breakpoint"
-          >
+          <select v-model="staticBreakpoint" name="static-breakpoint">
             <option :value="null">No static</option>
             <option value="xs">xs</option>
             <option value="sm">sm</option>
@@ -226,25 +184,25 @@
         <div class="controls__group__title">
           Controls
         </div>
+        <!-- Previous -->
         <div class="controls__group__item">
-          <!-- Previous -->
           <label>Previous</label>
-          <input
-            v-model="controls.previous"
-            @input="rerender"
-            @change="rerender"
-            type="text"
-          />
+          <input v-model="controls.previous" type="text" />
         </div>
+        <!-- Next -->
         <div class="controls__group__item">
-          <!-- Next -->
           <label>Next</label>
-          <input
-            v-model="controls.previous"
-            @input="rerender"
-            @change="rerender"
-            type="text"
-          />
+          <input v-model="controls.previous" type="text" />
+        </div>
+        <!-- Show Buttons -->
+        <div class="controls__group__item">
+          <label>Show Buttons</label>
+          <input v-model="controls.showButtons" type="checkbox" />
+        </div>
+        <!-- Show Pagination -->
+        <div class="controls__group__item">
+          <label>Show Pagination</label>
+          <input v-model="controls.showPagination" type="checkbox" />
         </div>
       </div>
     </div>
@@ -276,7 +234,8 @@ export default {
       controls: {
         previous: '&lt;',
         next: '&gt;',
-        styles: null
+        showButtons: true,
+        showPagination: true
       },
       loop: false,
       slidePadding: {
@@ -295,13 +254,6 @@ export default {
       },
       staticBreakpoint: null
     }
-  },
-  methods: {
-    async rerender() {
-      this.showCarousel = false
-      await this.$nextTick()
-      this.showCarousel = true
-    }
   }
 }
 </script>
@@ -316,6 +268,7 @@ export default {
 
   &__group {
     break-inside: avoid-column;
+    page-break-inside: avoid;
     @apply .border-solid .border-2 .rounded-3xl .p-4 .mb-4;
 
     &__title {
@@ -339,6 +292,7 @@ export default {
       @apply mr-4;
     }
 
+    select,
     input:not([type='checkbox']) {
       @apply .border-solid .border-2 .rounded .px-2;
     }
