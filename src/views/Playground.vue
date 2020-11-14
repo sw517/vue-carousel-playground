@@ -1,36 +1,33 @@
 <template>
-  <div class="home">
-    <VueCarousel
-      v-if="showCarousel"
-      :config="{
-        autoplay,
-        autoplayHoverPause,
-        autoplayInterval,
-        breakpoints,
-        controls,
-        loop,
-        slidePadding,
-        slidesVisible,
-        staticBreakpoint
-      }"
-    >
-      <template v-for="n in Number(slideCount)" v-slot:[n-1]>
-        <img :key="`Image - ${n}`" src="../assets/logo.png" class="mx-auto" />
-        <div :key="`Number - ${n}`" class="font-bold">Slide {{ n }}</div>
-      </template>
-    </VueCarousel>
+  <div class="playground">
+    <div :style="cCarouselContainerStyles" class="playground__carousel-wrap">
+      <VueCarousel v-if="showCarousel" ref="carousel" :config="customConfig">
+        <template v-for="n in Number(slideCount)" v-slot:[n-1]>
+          <img :key="`Image - ${n}`" src="../assets/logo.png" class="mx-auto" />
+          <div :key="`Number - ${n}`" class="font-bold">Slide {{ n }}</div>
+        </template>
+      </VueCarousel>
+    </div>
     <div class="controls">
       <!-- Group - Autoplay -->
       <div class="controls__group">
         <!-- Autoplay -->
         <div class="controls__group__item">
           <label>Autoplay</label>
-          <input type="checkbox" name="autoplay" v-model="autoplay" />
+          <input
+            type="checkbox"
+            name="autoplay"
+            v-model="customConfig.autoplay"
+          />
         </div>
         <!-- Autoplay Hover Pause -->
         <div class="controls__group__item">
           <label>Autoplay Hover Pause</label>
-          <input type="checkbox" name="autoplay" v-model="autoplayHoverPause" />
+          <input
+            type="checkbox"
+            name="autoplay"
+            v-model="customConfig.autoplayHoverPause"
+          />
         </div>
         <!-- Autoplay Interval -->
         <div class="controls__group__item">
@@ -38,7 +35,7 @@
           <input
             type="Number"
             name="autoplay-interval"
-            v-model="autoplayInterval"
+            v-model="customConfig.autoplayInterval"
             min="500"
           />
         </div>
@@ -50,7 +47,7 @@
           <input
             type="Number"
             name="slide-count"
-            v-model="slideCount"
+            v-model="customConfig.slideCount"
             min="0"
           />
         </div>
@@ -59,7 +56,25 @@
       <div class="controls__group">
         <div class="controls__group__item">
           <label>Loop</label>
-          <input type="checkbox" name="loop" v-model="loop" />
+          <input type="checkbox" name="loop" v-model="customConfig.loop" />
+        </div>
+      </div>
+      <!-- Group - Mouse Drag -->
+      <div class="controls__group">
+        <div class="controls__group__item">
+          <label>Mouse Drag</label>
+          <input type="checkbox" name="loop" v-model="customConfig.mouseDrag" />
+        </div>
+      </div>
+      <!-- Group - Show Empty Space -->
+      <div class="controls__group">
+        <div class="controls__group__item">
+          <label>Show Empty Space</label>
+          <input
+            type="checkbox"
+            name="loop"
+            v-model="customConfig.showEmptySpace"
+          />
         </div>
       </div>
       <!-- Group - Slides Visible -->
@@ -70,7 +85,7 @@
           <input
             type="Number"
             name="slides-visible-xs"
-            v-model="slidesVisible.xs"
+            v-model="customConfig.slidesVisible.xs"
             min="1"
             max="20"
           />
@@ -80,7 +95,7 @@
           <input
             type="Number"
             name="slides-visible-sm"
-            v-model="slidesVisible.sm"
+            v-model="customConfig.slidesVisible.sm"
             min="1"
             max="20"
           />
@@ -90,7 +105,7 @@
           <input
             type="Number"
             name="slides-visible-md"
-            v-model="slidesVisible.md"
+            v-model="customConfig.slidesVisible.md"
             min="0"
             max="20"
           />
@@ -100,7 +115,7 @@
           <input
             type="Number"
             name="slides-visible-lg"
-            v-model="slidesVisible.lg"
+            v-model="customConfig.slidesVisible.lg"
             min="1"
             max="20"
           />
@@ -110,7 +125,7 @@
           <input
             type="Number"
             name="slides-visible-xl"
-            v-model="slidesVisible.xl"
+            v-model="customConfig.slidesVisible.xl"
             min="1"
             max="20"
           />
@@ -124,7 +139,7 @@
           <input
             type="Number"
             name="slide-padding-xs"
-            v-model="slidePadding.xs"
+            v-model="customConfig.slidePadding.xs"
             min="0"
           />
         </div>
@@ -133,7 +148,7 @@
           <input
             type="Number"
             name="slide-padding-sm"
-            v-model="slidePadding.sm"
+            v-model="customConfig.slidePadding.sm"
             min="0"
           />
         </div>
@@ -142,7 +157,7 @@
           <input
             type="Number"
             name="slide-padding-md"
-            v-model="slidePadding.md"
+            v-model="customConfig.slidePadding.md"
             min="0"
           />
         </div>
@@ -151,7 +166,7 @@
           <input
             type="Number"
             name="slide-padding-lg"
-            v-model="slidePadding.lg"
+            v-model="customConfig.slidePadding.lg"
             min="0"
           />
         </div>
@@ -160,7 +175,7 @@
           <input
             type="Number"
             name="slide-padding-xl"
-            v-model="slidePadding.xl"
+            v-model="customConfig.slidePadding.xl"
             min="0"
           />
         </div>
@@ -169,7 +184,10 @@
       <div class="controls__group">
         <div class="controls__group__item">
           <label>Static Breakpoint</label>
-          <select v-model="staticBreakpoint" name="static-breakpoint">
+          <select
+            v-model="customConfig.staticBreakpoint"
+            name="static-breakpoint"
+          >
             <option :value="null">No static</option>
             <option value="xs">xs</option>
             <option value="sm">sm</option>
@@ -187,78 +205,235 @@
         <!-- Previous -->
         <div class="controls__group__item">
           <label>Previous</label>
-          <input v-model="controls.previous" type="text" />
+          <input v-model="customConfig.controls.previous" type="text" />
         </div>
         <!-- Next -->
         <div class="controls__group__item">
           <label>Next</label>
-          <input v-model="controls.previous" type="text" />
+          <input v-model="customConfig.controls.previous" type="text" />
         </div>
         <!-- Show Buttons -->
         <div class="controls__group__item">
           <label>Show Buttons</label>
-          <input v-model="controls.showButtons" type="checkbox" />
+          <input v-model="customConfig.controls.showButtons" type="checkbox" />
         </div>
         <!-- Show Pagination -->
         <div class="controls__group__item">
           <label>Show Pagination</label>
-          <input v-model="controls.showPagination" type="checkbox" />
+          <input
+            v-model="customConfig.controls.showPagination"
+            type="checkbox"
+          />
+        </div>
+        <!-- Pagination Numbered -->
+        <div class="controls__group__item">
+          <label>Pagination Numbered</label>
+          <input
+            v-model="customConfig.controls.paginationNumbered"
+            type="checkbox"
+          />
         </div>
       </div>
     </div>
+    <Btn @click.native="handleCopyClick" class="ml-auto mr-auto">
+      <span>Copy custom config to clipboard</span>
+    </Btn>
+    <transition name="fade">
+      <Snackbar v-if="showSnackbar">
+        {{ snackbarMsg }}
+      </Snackbar>
+    </transition>
   </div>
 </template>
 
 <script>
+// Helpers
+import cloneDeep from 'lodash.clonedeep'
+import isEqual from 'lodash.isequal'
+// Components
 import VueCarousel from '@samwood/vue-carousel'
+import Snackbar from '@/components/Snackbar'
+import Btn from '@/components/Btn'
 
 export default {
-  name: 'Home',
+  name: 'Playground',
   components: {
-    VueCarousel
+    VueCarousel,
+    Snackbar,
+    Btn
   },
   data() {
     return {
-      showCarousel: true,
+      carouselHeight: 0,
+      snackbarMsg: '',
+      snackbarMsgSucess: 'Custom config copied to clipboard',
+      snackbarMsgFail: 'Config already matches default, nothing copied',
+      showSnackbar: false,
       slideCount: 10,
-      autoplay: false,
-      autoplayHoverPause: false,
-      autoplayInterval: 3000,
-      breakpoints: {
-        xs: 0,
-        sm: 600,
-        md: 980,
-        lg: 1200,
-        xl: 1600
+      customConfig: {
+        autoplay: false,
+        autoplayHoverPause: false,
+        autoplayInterval: 3000,
+        breakpoints: {
+          xs: 0,
+          sm: 600,
+          md: 980,
+          lg: 1200,
+          xl: 1600
+        },
+        controls: {
+          previous: '&lt;',
+          next: '&gt;',
+          buttonStyles: null,
+          paginationNumbered: false,
+          paginationStyles: null,
+          showButtons: true,
+          showPagination: false
+        },
+        loop: false,
+        mouseDrag: false,
+        showEmptySpace: false,
+        slidePadding: {
+          xs: null,
+          sm: null,
+          md: null,
+          lg: null,
+          xl: null
+        },
+        slidesVisible: {
+          xs: 1,
+          sm: null,
+          md: null,
+          lg: null,
+          xl: null
+        },
+        staticBreakpoint: null
       },
-      controls: {
-        previous: '&lt;',
-        next: '&gt;',
-        showButtons: true,
-        showPagination: true
-      },
-      loop: false,
-      slidePadding: {
-        xs: null,
-        sm: null,
-        md: null,
-        lg: null,
-        xl: null
-      },
-      slidesVisible: {
-        xs: 1,
-        sm: null,
-        md: null,
-        lg: null,
-        xl: null
-      },
-      staticBreakpoint: null
+      showCarousel: true
+    }
+  },
+  computed: {
+    cCarouselContainerStyles() {
+      return {
+        height: this.carouselHeight + 'px',
+        overflow: 'hidden'
+      }
+    }
+  },
+  mounted() {
+    setTimeout(this.recordCarouselHeight, 100)
+  },
+  updated() {
+    setTimeout(this.recordCarouselHeight, 100)
+  },
+  methods: {
+    recordCarouselHeight() {
+      this.carouselHeight = this.$refs['carousel'].$el.clientHeight
+    },
+    getDefaultConfig() {
+      return {
+        autoplay: false,
+        autoplayHoverPause: false,
+        autoplayInterval: 3000,
+        breakpoints: {
+          xs: 0,
+          sm: 600,
+          md: 980,
+          lg: 1200,
+          xl: 1600
+        },
+        controls: {
+          previous: '&lt;',
+          next: '&gt;',
+          buttonStyles: null,
+          paginationNumbered: false,
+          paginationStyles: null,
+          showButtons: true,
+          showPagination: false
+        },
+        loop: false,
+        mouseDrag: false,
+        showEmptySpace: false,
+        slidePadding: {
+          xs: null,
+          sm: null,
+          md: null,
+          lg: null,
+          xl: null
+        },
+        slidesVisible: {
+          xs: 1,
+          sm: null,
+          md: null,
+          lg: null,
+          xl: null
+        },
+        staticBreakpoint: null
+      }
+    },
+    getReducedConfig() {
+      const defaultConfig = this.getDefaultConfig()
+      const customConfig = cloneDeep(this.customConfig)
+
+      Object.keys(customConfig).forEach(key => {
+        if (isEqual(customConfig[key], defaultConfig[key])) {
+          delete customConfig[key]
+        } else if (
+          typeof customConfig[key] === 'object' &&
+          typeof defaultConfig[key] === 'object' &&
+          customConfig[key] !== null
+        ) {
+          Object.keys(customConfig[key]).forEach(nestedKey => {
+            if (
+              isEqual(
+                customConfig[key][nestedKey],
+                defaultConfig[key][nestedKey]
+              )
+            ) {
+              delete customConfig[key][nestedKey]
+            }
+          })
+        }
+      })
+
+      return customConfig
+    },
+    async handleCopyClick() {
+      const config = this.getReducedConfig()
+      this.snackbarMsg = this.snackbarMsgFail
+
+      if (Object.keys(config).length) {
+        try {
+          const configString = JSON.stringify(config)
+            .replace(/{/g, '{\n')
+            .replace(/}/g, '\n}')
+            .replace(/:/g, ': ')
+            .replace(/,/g, ',\n')
+            .replace(/"/g, "'")
+          await navigator.clipboard.writeText(configString)
+          this.snackbarMsg = this.snackbarMsgSucess
+          console.log(this.snackbarMsg)
+        } catch (err) {
+          console.error('Failed to copy: ', err)
+        }
+      }
+      this.showSnackbar = true
+      setTimeout(() => {
+        this.showSnackbar = false
+      }, 3000)
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.playground__carousel-wrap {
+  overflow: hidden;
+  transition: height 0.6s ease;
+  will-change: height;
+  min-height: 200px;
+}
+
 .controls {
   @apply .p-4;
 
@@ -279,6 +454,7 @@ export default {
 
     &__item {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
 
       & + & {
@@ -297,5 +473,18 @@ export default {
       @apply .border-solid .border-2 .rounded .px-2;
     }
   }
+}
+
+.fade-enter-active {
+  transition: opacity ease 0.2s;
+}
+
+.fade-leave-active {
+  transition: opacity ease 1s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
