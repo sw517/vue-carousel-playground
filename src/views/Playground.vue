@@ -3,7 +3,7 @@
     <div :style="cCarouselContainerStyles" class="playground__carousel-wrap">
       <VueCarousel v-if="showCarousel" ref="carousel" :config="customConfig">
         <template v-for="n in Number(slideCount)" v-slot:[n-1]>
-          <img :key="`Image - ${n}`" src="../assets/logo.png" class="mx-auto" />
+          <img :key="`Image - ${n}`" src="@/assets/logo.png" class="mx-auto" />
           <div :key="`Number - ${n}`" class="font-bold">Slide {{ n }}</div>
         </template>
       </VueCarousel>
@@ -252,8 +252,8 @@ import cloneDeep from 'lodash.clonedeep'
 import isEqual from 'lodash.isequal'
 // Components
 import VueCarousel from '@samwood/vue-carousel'
-import Snackbar from '@/components/Snackbar'
-import Btn from '@/components/Btn'
+import Snackbar from '@/components/atoms/Snackbar'
+import Btn from '@/components/atoms/Btn'
 
 export default {
   name: 'Playground',
