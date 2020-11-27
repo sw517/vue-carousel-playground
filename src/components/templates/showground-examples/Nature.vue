@@ -2,7 +2,7 @@
   <div class="nature-example">
     <ShowgroundExample title="Picture Gallery" :config="config">
       <VueCarousel :config="config">
-        <template v-for="n in 3" v-slot:[n-1]>
+        <template v-for="n in 4" v-slot:[n-1]>
           <div
             :key="n - 1"
             :style="{
@@ -36,6 +36,7 @@ export default {
           showButtons: false
         },
         loop: true,
+        mouseDrag: true,
         slidePadding: {
           xs: 0
         }

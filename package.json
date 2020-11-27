@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 8081",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@samwood/vue-carousel": "^0.1.72",
+    "@samwood/vue-carousel": "^0.1.83",
     "core-js": "^3.6.5",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0",

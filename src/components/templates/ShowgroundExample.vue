@@ -1,15 +1,12 @@
 <template>
   <div class="showground-example">
-    <h2
-      :class="[$props.titleRight ? 'text-right' : 'text-left']"
-      class="showground-example__title"
-    >
+    <h2 class="showground-example__title text-left mx-4 sm:mx-8 mb-4">
       {{ $props.title }}
     </h2>
-    <div class="showground-example__carsouel-wrap mb-12">
+    <div class="showground-example__carousel-wrap mb-12">
       <slot />
     </div>
-    <div class="showground-example__code-wrap px-2 sm:flex items-start">
+    <div class="showground-example__code-wrap mx-4 sm:mx-8 sm:flex items-start">
       <CodeBlock
         class="showground-example__codeblock mb-4"
         title="Config"
@@ -18,8 +15,9 @@
       <CodeBlock
         class="showground-example__codeblock"
         v-if="$props.css"
-        title="CSS"
+        title="Custom CSS"
         :code="$props.css"
+        type="css"
       />
     </div>
   </div>
@@ -37,10 +35,6 @@ export default {
     title: {
       type: String,
       default: ''
-    },
-    titleRight: {
-      type: Boolean,
-      default: false
     },
     config: {
       type: Object,
@@ -64,14 +58,20 @@ export default {
     font-size: 28px;
     padding-left: 10px;
     padding-right: 10px;
+    line-height: normal;
 
-    @media screen {
+    @media screen and (min-width: 700px) {
       font-size: 50px;
     }
   }
 
   &__codeblock {
-    flex-basis: 50%;
+    @media screen and (min-width: 700px) {
+      flex-basis: 50%;
+      + .showground-example__codeblock {
+        margin-left: 20px;
+      }
+    }
   }
 }
 </style>

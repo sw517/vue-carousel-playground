@@ -1,7 +1,7 @@
 <template>
   <div class="playground">
     <div :style="cCarouselContainerStyles" class="playground__carousel-wrap">
-      <VueCarousel v-if="showCarousel" ref="carousel" :config="customConfig">
+      <VueCarousel ref="carousel" :config="customConfig">
         <template v-for="n in Number(slideCount)" v-slot:[n-1]>
           <img :key="`Image - ${n}`" src="@/assets/logo.png" class="mx-auto" />
           <div :key="`Number - ${n}`" class="font-bold">Slide {{ n }}</div>
@@ -40,14 +40,14 @@
           />
         </div>
       </div>
-      <!-- Group - Count -->
+      <!-- Group - Slide Count -->
       <div class="controls__group">
         <div class="controls__group__item">
           <label>Slide Count</label>
           <input
             type="Number"
             name="slide-count"
-            v-model="customConfig.slideCount"
+            v-model.number="slideCount"
             min="0"
           />
         </div>
@@ -63,18 +63,14 @@
       <div class="controls__group">
         <div class="controls__group__item">
           <label>Mouse Drag</label>
-          <input type="checkbox" name="loop" v-model="customConfig.mouseDrag" />
+          <input type="checkbox" v-model="customConfig.mouseDrag" />
         </div>
       </div>
       <!-- Group - Show Empty Space -->
       <div class="controls__group">
         <div class="controls__group__item">
           <label>Show Empty Space</label>
-          <input
-            type="checkbox"
-            name="loop"
-            v-model="customConfig.showEmptySpace"
-          />
+          <input type="checkbox" v-model="customConfig.showEmptySpace" />
         </div>
       </div>
       <!-- Group - Slides Visible -->
@@ -234,6 +230,28 @@
           />
         </div>
       </div>
+      <!-- Group - Touch Drag -->
+      <div class="controls__group">
+        <div class="controls__group__item">
+          <label>Touch Drag</label>
+          <input type="checkbox" v-model="customConfig.touchDrag" />
+        </div>
+      </div>
+      <!-- Group - Transition -->
+      <div class="controls__group">
+        <div class="controls__group__item">
+          <label>Transition Duration</label>
+          <input
+            type="number"
+            name="transitionDuration"
+            v-model="customConfig.transitionDuration"
+          />
+        </div>
+        <div class="controls__group__item">
+          <label>Transition Timing Function</label>
+          <input type="text" v-model="customConfig.transitionTimingFunction" />
+        </div>
+      </div>
     </div>
     <Btn @click.native="handleCopyClick" class="ml-auto mr-auto">
       <span>Copy custom config to clipboard</span>
@@ -265,11 +283,6 @@ export default {
   data() {
     return {
       carouselHeight: 0,
-      snackbarMsg: '',
-      snackbarMsgSucess: 'Custom config copied to clipboard',
-      snackbarMsgFail: 'Config already matches default, nothing copied',
-      showSnackbar: false,
-      slideCount: 10,
       customConfig: {
         autoplay: false,
         autoplayHoverPause: false,
@@ -307,9 +320,16 @@ export default {
           lg: null,
           xl: null
         },
-        staticBreakpoint: null
+        staticBreakpoint: null,
+        touchDrag: true,
+        transitionDuration: 500,
+        transitionTimingFunction: 'ease'
       },
-      showCarousel: true
+      snackbarMsg: '',
+      snackbarMsgSucess: 'Custom config copied to clipboard',
+      snackbarMsgFail: 'Config already matches default, nothing copied',
+      showSnackbar: false,
+      slideCount: 10
     }
   },
   computed: {
@@ -368,7 +388,10 @@ export default {
           lg: null,
           xl: null
         },
-        staticBreakpoint: null
+        staticBreakpoint: null,
+        touchDrag: true,
+        transitionDuration: 500,
+        transitionTimingFunction: 'ease'
       }
     },
     getReducedConfig() {

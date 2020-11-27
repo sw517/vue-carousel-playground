@@ -1,31 +1,28 @@
 <template>
   <div class="commercial-example">
-    <ShowgroundExample
-      :title-right="true"
-      title="Commercial Products"
-      :config="config"
-      :css="css"
-    >
-      <VueCarousel :config="config">
-        <template v-for="n in 7" v-slot:[n-1]>
-          <router-link
-            to="/"
-            class="commercial-example__card hover:underline overflow-hidden block"
-            :key="n - 1"
-          >
-            <div
-              :style="{
-                backgroundImage: `url(images/showground/fruit/fruit-${n}.jpg)`
-              }"
-              class="commercial-example__ratio-background"
-            />
-            <div class="px-4 py-2 text-left">
-              <div>Product {{ n }}</div>
-              <div>Cost: &pound;&dollar;&euro;</div>
-            </div>
-          </router-link>
-        </template>
-      </VueCarousel>
+    <ShowgroundExample title="Commercial" :config="config" :css="css">
+      <div class="row ml-4 mr-4 sm:ml-8 sm:mr-8">
+        <VueCarousel :config="config">
+          <template v-for="n in 7" v-slot:[n-1]>
+            <router-link
+              to="/"
+              class="commercial-example__card hover:underline overflow-hidden block"
+              :key="n - 1"
+            >
+              <div
+                :style="{
+                  backgroundImage: `url(images/showground/fruit/fruit-1.jpg)`
+                }"
+                class="commercial-example__ratio-background"
+              />
+              <div class="px-4 py-2 text-left">
+                <div>Product Name</div>
+                <div>Cost</div>
+              </div>
+            </router-link>
+          </template>
+        </VueCarousel>
+      </div>
     </ShowgroundExample>
   </div>
 </template>
