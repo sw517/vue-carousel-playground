@@ -435,8 +435,10 @@ export default {
             .replace(/"/g, "'")
           await navigator.clipboard.writeText(configString)
           this.snackbarMsg = this.snackbarMsgSucess
+          // eslint-disable-next-line no-console
           console.log(this.snackbarMsg)
         } catch (err) {
+          // eslint-disable-next-line no-console
           console.error('Failed to copy: ', err)
         }
       }
