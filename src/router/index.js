@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Playground from '../views/Playground.vue'
-import Showground from '../views/Showground.vue'
+import Playground from '@/views/Playground.vue'
+import Showground from '@/views/Showground.vue'
 
 Vue.use(VueRouter)
 
