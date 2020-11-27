@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Playground from '../views/Playground.vue'
+import Showground from '../views/Showground.vue'
 
 Vue.use(VueRouter)
 
@@ -13,11 +14,7 @@ const routes = [
   {
     path: '/showground',
     name: 'Showground',
-    // route level code-splitting
-    // this generates a separate chunk (showground.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "showground" */ '../views/Showground.vue')
+    component: Showground
   }
 ]
 
