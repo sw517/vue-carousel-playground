@@ -1,19 +1,17 @@
 <template>
-  <div class="nature-example">
-    <ShowgroundExample title="Picture Gallery" :config="config">
-      <VueCarousel :config="config">
-        <template v-for="n in 4" v-slot:[n-1]>
-          <div
-            :key="n - 1"
-            :style="{
-              backgroundImage: `url(images/showground/nature/nature-${n}.jpg)`
-            }"
-            class="nature-example__ratio-background"
-          />
-        </template>
-      </VueCarousel>
-    </ShowgroundExample>
-  </div>
+  <ShowgroundExample class="gallery" title="Picture Gallery" :config="config">
+    <VueCarousel :config="config">
+      <template v-for="n in 4" v-slot:[n-1]>
+        <div
+          :key="n - 1"
+          :style="{
+            backgroundImage: `url(images/showground/nature/nature-${n}.jpg)`
+          }"
+          class="gallery__ratio-background"
+        />
+      </template>
+    </VueCarousel>
+  </ShowgroundExample>
 </template>
 
 <script>
@@ -21,7 +19,7 @@ import VueCarousel from '@samwood/vue-carousel'
 import ShowgroundExample from '@/components/templates/ShowgroundExample'
 
 export default {
-  name: 'Nature',
+  name: 'Gallery',
   components: {
     ShowgroundExample,
     VueCarousel
@@ -47,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss">
-.nature-example__ratio-background {
+.gallery__ratio-background {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

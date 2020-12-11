@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import CodeBlock from '@/components/atoms/CodeBlock'
+import CodeBlock from '@/components/molecules/CodeBlock'
 
 export default {
   name: 'ShowgroundExample',
@@ -54,14 +54,23 @@ export default {
 
 <style lang="scss">
 .showground-example {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+
+  &:nth-child(even) {
+    background-color: #f5f5f5;
+  }
+
   &__title {
     font-size: 28px;
     padding-left: 10px;
     padding-right: 10px;
     line-height: normal;
+    letter-spacing: 5px;
 
     @media screen and (min-width: 700px) {
-      font-size: 50px;
+      font-size: 30px;
+      letter-spacing: 10px;
     }
   }
 
