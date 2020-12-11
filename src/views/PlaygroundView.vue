@@ -206,12 +206,17 @@
         <!-- Next -->
         <div class="controls__group__item">
           <label>Next</label>
-          <input v-model="customConfig.controls.previous" type="text" />
+          <input v-model="customConfig.controls.next" type="text" />
         </div>
         <!-- Show Buttons -->
         <div class="controls__group__item">
           <label>Show Buttons</label>
           <input v-model="customConfig.controls.showButtons" type="checkbox" />
+        </div>
+        <!-- Show Play Button -->
+        <div class="controls__group__item">
+          <label>Show Play</label>
+          <input v-model="customConfig.controls.showPlay" type="checkbox" />
         </div>
         <!-- Show Pagination -->
         <div class="controls__group__item">
@@ -301,7 +306,8 @@ export default {
           paginationNumbered: false,
           paginationStyles: null,
           showButtons: true,
-          showPagination: false
+          showPagination: false,
+          showPlay: false
         },
         loop: false,
         mouseDrag: false,
@@ -369,7 +375,8 @@ export default {
           paginationNumbered: false,
           paginationStyles: null,
           showButtons: true,
-          showPagination: false
+          showPagination: false,
+          showPlay: false
         },
         loop: false,
         mouseDrag: false,
