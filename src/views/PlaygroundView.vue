@@ -40,15 +40,52 @@
           />
         </div>
       </div>
-      <!-- Group - Slide Count -->
       <div class="controls__group">
+        <!-- Group - Center -->
         <div class="controls__group__item">
-          <label>Slide Count</label>
+          <label>Center</label>
+          <input type="checkbox" v-model="customConfig.center" />
+        </div>
+      </div>
+      <!-- Group - Controls -->
+      <div class="controls__group">
+        <div class="controls__group__title">
+          Controls
+        </div>
+        <!-- Previous -->
+        <div class="controls__group__item">
+          <label>Previous</label>
+          <input v-model="customConfig.controls.previous" type="text" />
+        </div>
+        <!-- Next -->
+        <div class="controls__group__item">
+          <label>Next</label>
+          <input v-model="customConfig.controls.next" type="text" />
+        </div>
+        <!-- Show Buttons -->
+        <div class="controls__group__item">
+          <label>Show Buttons</label>
+          <input v-model="customConfig.controls.showButtons" type="checkbox" />
+        </div>
+        <!-- Show Play Button -->
+        <div class="controls__group__item">
+          <label>Show Play</label>
+          <input v-model="customConfig.controls.showPlay" type="checkbox" />
+        </div>
+        <!-- Show Pagination -->
+        <div class="controls__group__item">
+          <label>Show Pagination</label>
           <input
-            type="Number"
-            name="slide-count"
-            v-model.number="slideCount"
-            min="0"
+            v-model="customConfig.controls.showPagination"
+            type="checkbox"
+          />
+        </div>
+        <!-- Pagination Numbered -->
+        <div class="controls__group__item">
+          <label>Pagination Numbered</label>
+          <input
+            v-model="customConfig.controls.paginationNumbered"
+            type="checkbox"
           />
         </div>
       </div>
@@ -71,6 +108,18 @@
         <div class="controls__group__item">
           <label>Show Empty Space</label>
           <input type="checkbox" v-model="customConfig.showEmptySpace" />
+        </div>
+      </div>
+      <!-- Group - Slide Count -->
+      <div class="controls__group">
+        <div class="controls__group__item">
+          <label>Slide Count</label>
+          <input
+            type="Number"
+            name="slide-count"
+            v-model.number="slideCount"
+            min="0"
+          />
         </div>
       </div>
       <!-- Group - Slides Visible -->
@@ -176,6 +225,13 @@
           />
         </div>
       </div>
+      <div class="controls__group">
+        <!-- Group - Starting Slide -->
+        <div class="controls__group__item">
+          <label>Starting Slide</label>
+          <input type="Number" v-model="customConfig.startingSlide" min="0" />
+        </div>
+      </div>
       <!-- Group - Static Breakpoint -->
       <div class="controls__group">
         <div class="controls__group__item">
@@ -191,48 +247,6 @@
             <option value="lg">lg</option>
             <option value="xl">xl</option>
           </select>
-        </div>
-      </div>
-      <!-- Group - Controls -->
-      <div class="controls__group">
-        <div class="controls__group__title">
-          Controls
-        </div>
-        <!-- Previous -->
-        <div class="controls__group__item">
-          <label>Previous</label>
-          <input v-model="customConfig.controls.previous" type="text" />
-        </div>
-        <!-- Next -->
-        <div class="controls__group__item">
-          <label>Next</label>
-          <input v-model="customConfig.controls.next" type="text" />
-        </div>
-        <!-- Show Buttons -->
-        <div class="controls__group__item">
-          <label>Show Buttons</label>
-          <input v-model="customConfig.controls.showButtons" type="checkbox" />
-        </div>
-        <!-- Show Play Button -->
-        <div class="controls__group__item">
-          <label>Show Play</label>
-          <input v-model="customConfig.controls.showPlay" type="checkbox" />
-        </div>
-        <!-- Show Pagination -->
-        <div class="controls__group__item">
-          <label>Show Pagination</label>
-          <input
-            v-model="customConfig.controls.showPagination"
-            type="checkbox"
-          />
-        </div>
-        <!-- Pagination Numbered -->
-        <div class="controls__group__item">
-          <label>Pagination Numbered</label>
-          <input
-            v-model="customConfig.controls.paginationNumbered"
-            type="checkbox"
-          />
         </div>
       </div>
       <!-- Group - Touch Drag -->
@@ -288,49 +302,7 @@ export default {
   data() {
     return {
       carouselHeight: 0,
-      customConfig: {
-        autoplay: false,
-        autoplayHoverPause: false,
-        autoplayInterval: 3000,
-        breakpoints: {
-          xs: 0,
-          sm: 600,
-          md: 980,
-          lg: 1200,
-          xl: 1600
-        },
-        controls: {
-          previous: '&lt;',
-          next: '&gt;',
-          buttonStyles: null,
-          paginationNumbered: false,
-          paginationStyles: null,
-          showButtons: true,
-          showPagination: false,
-          showPlay: false
-        },
-        loop: false,
-        mouseDrag: false,
-        showEmptySpace: false,
-        slidePadding: {
-          xs: null,
-          sm: null,
-          md: null,
-          lg: null,
-          xl: null
-        },
-        slidesVisible: {
-          xs: 1,
-          sm: null,
-          md: null,
-          lg: null,
-          xl: null
-        },
-        staticBreakpoint: null,
-        touchDrag: true,
-        transitionDuration: 500,
-        transitionTimingFunction: 'ease'
-      },
+      customConfig: this.getDefaultConfig(),
       snackbarMsg: '',
       snackbarMsgSucess: 'Custom config copied to clipboard',
       snackbarMsgFail: 'Config already matches default, nothing copied',
@@ -368,6 +340,7 @@ export default {
           lg: 1200,
           xl: 1600
         },
+        center: false,
         controls: {
           previous: '&lt;',
           next: '&gt;',
@@ -378,6 +351,7 @@ export default {
           showPagination: false,
           showPlay: false
         },
+        debug: true,
         loop: false,
         mouseDrag: false,
         showEmptySpace: false,
@@ -395,6 +369,7 @@ export default {
           lg: null,
           xl: null
         },
+        startingSlide: 2,
         staticBreakpoint: null,
         touchDrag: true,
         transitionDuration: 500,
