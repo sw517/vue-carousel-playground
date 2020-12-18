@@ -14,5 +14,9 @@ export default {
   color: #fff;
   cursor: pointer;
   @apply .shadow .inline-block .px-6 .py-2 .rounded-xl;
+
+  &:hover {
+    background-color: #5bcc9a;
+  }
 }
 </style>

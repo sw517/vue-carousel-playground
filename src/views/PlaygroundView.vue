@@ -3,7 +3,11 @@
     <div :style="cCarouselContainerStyles" class="playground__carousel-wrap">
       <VueCarousel ref="carousel" :config="customConfig">
         <template v-for="n in Number(slideCount)" v-slot:[n-1]>
-          <img :key="`Image - ${n}`" src="@/assets/logo.png" class="mx-auto" />
+          <img
+            :key="`Image - ${n}`"
+            src="/images/logo/vue.png"
+            class="mx-auto"
+          />
           <div :key="`Number - ${n}`" class="font-bold">Slide {{ n }}</div>
         </template>
       </VueCarousel>
@@ -19,6 +23,7 @@
             name="autoplay"
             v-model="customConfig.autoplay"
           />
+          <Tooltip :text="configDesc.autoplay" class="flex-grow text-right" />
         </div>
         <!-- Autoplay Hover Pause -->
         <div class="controls__group__item">
@@ -27,6 +32,10 @@
             type="checkbox"
             name="autoplay"
             v-model="customConfig.autoplayHoverPause"
+          />
+          <Tooltip
+            :text="configDesc.autoplayHoverPause"
+            class="flex-grow text-right"
           />
         </div>
         <!-- Autoplay Interval -->
@@ -38,6 +47,10 @@
             v-model="customConfig.autoplayInterval"
             min="500"
           />
+          <Tooltip
+            :text="configDesc.autoplayInterval"
+            class="flex-grow text-right"
+          />
         </div>
       </div>
       <div class="controls__group">
@@ -45,6 +58,7 @@
         <div class="controls__group__item">
           <label>Center</label>
           <input type="checkbox" v-model="customConfig.center" />
+          <Tooltip :text="configDesc.center" class="flex-grow text-right" />
         </div>
       </div>
       <!-- Group - Controls -->
@@ -56,6 +70,7 @@
         <div class="controls__group__item">
           <label>Previous</label>
           <input v-model="customConfig.controls.previous" type="text" />
+          <Tooltip :text="configDesc.controls" class="flex-grow text-right" />
         </div>
         <!-- Next -->
         <div class="controls__group__item">
@@ -93,7 +108,8 @@
       <div class="controls__group">
         <div class="controls__group__item">
           <label>Loop</label>
-          <input type="checkbox" name="loop" v-model="customConfig.loop" />
+          <input type="checkbox" v-model="customConfig.loop" />
+          <Tooltip :text="configDesc.loop" class="flex-grow text-right" />
         </div>
       </div>
       <!-- Group - Mouse Drag -->
@@ -101,6 +117,7 @@
         <div class="controls__group__item">
           <label>Mouse Drag</label>
           <input type="checkbox" v-model="customConfig.mouseDrag" />
+          <Tooltip :text="configDesc.mouseDrag" class="flex-grow text-right" />
         </div>
       </div>
       <!-- Group - Show Empty Space -->
@@ -108,6 +125,10 @@
         <div class="controls__group__item">
           <label>Show Empty Space</label>
           <input type="checkbox" v-model="customConfig.showEmptySpace" />
+          <Tooltip
+            :text="configDesc.showEmptySpace"
+            class="flex-grow text-right"
+          />
         </div>
       </div>
       <!-- Group - Slide Count -->
@@ -119,6 +140,10 @@
             name="slide-count"
             v-model.number="slideCount"
             min="0"
+          />
+          <Tooltip
+            text="Change number of slides in carousel<br>(Not a config option)"
+            class="flex-grow text-right"
           />
         </div>
       </div>
@@ -133,6 +158,10 @@
             v-model="customConfig.slidesVisible.xs"
             min="1"
             max="20"
+          />
+          <Tooltip
+            :text="configDesc.slidesVisible"
+            class="flex-grow text-right"
           />
         </div>
         <div class="controls__group__item">
@@ -187,6 +216,10 @@
             v-model="customConfig.slidePadding.xs"
             min="0"
           />
+          <Tooltip
+            :text="configDesc.slidePadding"
+            class="flex-grow text-right"
+          />
         </div>
         <div class="controls__group__item">
           <label>sm</label>
@@ -230,6 +263,10 @@
         <div class="controls__group__item">
           <label>Starting Slide</label>
           <input type="Number" v-model="customConfig.startingSlide" min="0" />
+          <Tooltip
+            :text="configDesc.startingSlide"
+            class="flex-grow text-right"
+          />
         </div>
       </div>
       <!-- Group - Static Breakpoint -->
@@ -247,6 +284,10 @@
             <option value="lg">lg</option>
             <option value="xl">xl</option>
           </select>
+          <Tooltip
+            :text="configDesc.staticBreakpoint"
+            class="flex-grow text-right"
+          />
         </div>
       </div>
       <!-- Group - Touch Drag -->
@@ -254,6 +295,7 @@
         <div class="controls__group__item">
           <label>Touch Drag</label>
           <input type="checkbox" v-model="customConfig.touchDrag" />
+          <Tooltip :text="configDesc.touchDrag" class="flex-grow text-right" />
         </div>
       </div>
       <!-- Group - Transition -->
@@ -265,18 +307,26 @@
             name="transitionDuration"
             v-model="customConfig.transitionDuration"
           />
+          <Tooltip
+            :text="configDesc.transitionDuration"
+            class="flex-grow text-right"
+          />
         </div>
         <div class="controls__group__item">
           <label>Transition Timing Function</label>
           <input type="text" v-model="customConfig.transitionTimingFunction" />
+          <Tooltip
+            :text="configDesc.transitionTimingFunction"
+            class="flex-grow text-right"
+          />
         </div>
       </div>
     </div>
     <Btn @click.native="handleCopyClick" class="ml-auto mr-auto">
-      <span>Copy custom config to clipboard</span>
+      <span>&#128203; Copy Config</span>
     </Btn>
     <transition name="fade">
-      <Snackbar v-if="showSnackbar">
+      <Snackbar v-show="showSnackbar" class="clipboard-snackbar">
         {{ snackbarMsg }}
       </Snackbar>
     </transition>
@@ -287,21 +337,26 @@
 // Helpers
 import cloneDeep from 'lodash.clonedeep'
 import isEqual from 'lodash.isequal'
+// Misc
+import configDesc from '../assets/misc/configDescriptionMap.js'
 // Components
 import VueCarousel from '@samwood/vue-carousel'
 import Snackbar from '@/components/atoms/Snackbar'
 import Btn from '@/components/atoms/Btn'
+import Tooltip from '@/components/molecules/Tooltip'
 
 export default {
   name: 'Playground',
   components: {
     VueCarousel,
     Snackbar,
-    Btn
+    Btn,
+    Tooltip
   },
   data() {
     return {
       carouselHeight: 0,
+      configDesc,
       customConfig: this.getDefaultConfig(),
       snackbarMsg: '',
       snackbarMsgSucess: 'Custom config copied to clipboard',
@@ -369,7 +424,7 @@ export default {
           lg: null,
           xl: null
         },
-        startingSlide: 2,
+        startingSlide: 0,
         staticBreakpoint: null,
         touchDrag: true,
         transitionDuration: 500,
@@ -480,6 +535,13 @@ export default {
       @apply .border-solid .border-2 .rounded .px-2;
     }
   }
+}
+
+.clipboard-snackbar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .fade-enter-active {
