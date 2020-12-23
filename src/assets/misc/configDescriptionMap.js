@@ -10,6 +10,8 @@ export default {
     'Aligns the current slide in the center of the carousel instead of to the left-side.',
   controls:
     'Change the contents and styles of the previous/next controls and pagination for the carousel. HTML can be passed in a String to "previous" and "next".<br/>Styles must be passed as an object.',
+  group:
+    'Group all items in current view to move all outside of view and show all new items when the carousel is dragged or the pagination or control buttons are clicked. By default, items are treated individually and will move one at a time. Caveat - if both `group` and `loop` are set to true, ensure there is no remainder of slides when dividing total slide-count by the value of `slidesVisible` at the current breakpoint.',
   loop:
     'Determines if the carousel should loop infintely. If false, carousel will only animate between first and last slide.',
   mouseDrag:

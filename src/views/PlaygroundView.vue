@@ -104,6 +104,14 @@
           />
         </div>
       </div>
+      <!-- Group - Group -->
+      <div class="controls__group">
+        <div class="controls__group__item">
+          <label>Group</label>
+          <input type="checkbox" v-model="customConfig.group" />
+          <Tooltip :text="configDesc.group" class="flex-grow text-right" />
+        </div>
+      </div>
       <!-- Group - Loop -->
       <div class="controls__group">
         <div class="controls__group__item">
@@ -407,6 +415,7 @@ export default {
           showPlay: false
         },
         debug: true,
+        group: false,
         loop: false,
         mouseDrag: false,
         showEmptySpace: false,
